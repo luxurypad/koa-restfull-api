@@ -1,4 +1,3 @@
-const news = require('./uri/news')
 const uriHandler = require('./uriHandler')
 
 //建立url和uri对应表

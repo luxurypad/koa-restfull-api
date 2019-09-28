@@ -27,7 +27,6 @@ async function getHandle(ctx, next, collection, query, body) {
 }
 //POST
 async function postHandle(ctx, next, collection, query, body) {
-
   const result = await collection.insertMany(...body).catch((error) => { console.log(error) })
   ctx.body = (result ? { code: 200, msg: 'success', result: result.result } : { code: 400, msg: '语法错误', result: null })
 }
@@ -37,7 +36,8 @@ async function deleteHandle(ctx, next, collection, query, body) {
   ctx.body = (result.result.n >= 1 ? { code: 200, msg: '删除成功', result: result.result } : { code: 200, msg: '删除失败', result: result.result })
 }
 
-//PUT 循环执行replaceOne实现批量替换
+//PUT 
+//循环执行replaceOne实现批量替换
 async function putHandle(ctx, next, collection, query, body) {
   //拿到过滤结果=>结果对象数组()
   const result = await collection.find(body[0]).toArray()
@@ -70,6 +70,5 @@ async function patchHandle(ctx, next, collection, query, body) {
   const result = await collection.updateMany(...body)
   ctx.body = (result.result.n >= 1 ? { code: 200, msg: '更新成功', result: result.result } : { code: 200, msg: '更新失败', result: result.result })
 }
-
 
 module.exports = uriHandler

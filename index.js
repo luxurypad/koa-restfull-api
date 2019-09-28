@@ -10,7 +10,7 @@ app.use(koaBody())
 app.use(useToken)
 app.use(static('./public'))
 
-//测试中间件
+//测试用中间件
 app.use(async(ctx,next)=>{
   await next()
 })
