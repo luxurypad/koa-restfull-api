@@ -1,6 +1,7 @@
 const news = require('./uri/news')
 const uriHandler = require('./uriHandler')
 
+//建立url和uri对应表
 const matchList = [
   { pathRegExp: /^\/users$/, uri: 'users' },
   { pathRegExp: /^\/news$/, uri: 'news' },
@@ -9,23 +10,16 @@ const matchList = [
 ]
 
 async function router(ctx, next) {
-  const uri=matchList.find((v, i, obj) => v.pathRegExp.test(ctx.path)).uri
-  const query=ctx.query
-  const body=ctx.request.body
-  const method=ctx.method
-  if(uri){
-    await uriHandler(ctx,next,uri,query,body,method)
-  }else{
-    ctx.body={
-      code:404,
-      msg:'无法找到相应资源',
-      result:null
+  //匹配到uri名称，通过参数赋值给处理器
+  const uri = matchList.find((v, i, obj) => v.pathRegExp.test(ctx.path)).uri
+  if (uri) {
+    await uriHandler(ctx, next, uri)
+  } else {
+    ctx.body = {
+      code: 404,
+      msg: '无法找到相应资源',
+      result: null
     }
   }
-  // // await matchList.find((v, i, obj) => v.pathRegExp.test(ctx.path)).uri(ctx,next)
-  // const dbName = matchList.find((v, i, obj) => v.pathRegExp.test(ctx.path)).uri
-  // await handle(ctx, next, dbName)
-
 }
-
 module.exports = router
