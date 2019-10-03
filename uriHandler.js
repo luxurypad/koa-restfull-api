@@ -5,7 +5,8 @@ const handleList = [
   { method: 'DELETE', handler: deleteHandle },
   { method: 'PUT', handler: putHandle },
   { method: 'GET', handler: getHandle },
-  { method: 'PATCH', handler: patchHandle }
+  { method: 'PATCH', handler: patchHandle },
+  { method: 'OPTIONS', handler: optionsHandle }
 ]
 
 async function uriHandler(ctx, next, uri) {
@@ -67,8 +68,13 @@ async function putHandle(ctx, next, collection, query, body) {
 
 //PATCH
 async function patchHandle(ctx, next, collection, query, body) {
+  console.log(body)
   const result = await collection.updateMany(...body)
   ctx.body = (result.result.n >= 1 ? { code: 200, msg: '更新成功', result: result.result } : { code: 200, msg: '更新失败', result: result.result })
+}
+
+async function optionsHandle(ctx,next){
+  ctx.status=200
 }
 
 module.exports = uriHandler

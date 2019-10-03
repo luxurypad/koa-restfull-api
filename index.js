@@ -10,9 +10,12 @@ app.use(koaBody())
 app.use(useToken)
 app.use(static('./public'))
 
-//测试用中间件
+//跨域配置
 app.use(async(ctx,next)=>{
   await next()
+  ctx.set("Access-Control-Allow-Origin","*")
+  ctx.set("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept,Authorization")
+  ctx.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE,PATCH")
 })
 
 app.use(router)
