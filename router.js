@@ -5,6 +5,7 @@ const matchList = [
   { pathRegExp: /^\/users$/, uri: 'users' },
   { pathRegExp: /^\/news$/, uri: 'news' },
   { pathRegExp: /^\/ssq$/, uri: 'ssq' },
+  { pathRegExp: /^\/nav-tree$/, uri: 'navTree' },
   { pathRegExp: /.*/, uri: '' },
 ]
 
