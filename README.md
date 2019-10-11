@@ -19,11 +19,11 @@
   data:[doc1,doc2,doc3,...] //响应返回数据
 }
 ```
-method| code|msg|result|data
--|-|-|-|-
-GET|yes|yes|{n,ok}|yes
-POST|yes|yes|{n,ok}|空数组
-PUT|yes|yes|{n,nModified,ok}|空数组
-PATCH|yes|yes|{n,nModified,ok}|空数组
-DELETE|yes|yes|{n,ok}|空数组
+method| code|msg|method|result|data
+-|-|-|-|-|-
+GET|yes|yes|yes|{n,ok}|yes
+POST|yes|yes|yes|{n,ok}|空数组
+PUT|yes|yes|yes|{n,nModified,ok}|空数组
+PATCH|yes|yes|yes|{n,nModified,ok}|空数组
+DELETE|yes|yes|yes|{n,ok}|空数组
 

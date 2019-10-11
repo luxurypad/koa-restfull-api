@@ -28,12 +28,15 @@ async function useToken(ctx, next) {   //定义中间件方法
   })
 
   if (isWhiteList) {
+
     await next() //如果是白名单请求，直接通过
-    
-    // console.log(ctx.body)
-    if (ctx.path === '/users' && ctx.body) {
-      if (ctx.body.result.length===1){
-       ctx.body.result[0].token = create({ username: ctx.body.result[0].username })
+
+    //洋葱模型 返回时,判断登陆请求
+    if (ctx.path === '/users' && ctx.body.method === 'GET') {
+      //判断是否登陆请求
+      const { username, password } = JSON.parse(ctx.query.g)[0]
+      if (!!username && !!password && ctx.body.result.n === 1) {
+        ctx.body.data[0].token = create({ username: ctx.body.data[0].username })
       }
     }
 
@@ -44,7 +47,8 @@ async function useToken(ctx, next) {   //定义中间件方法
       ctx.body = {
         code: 400,
         msg: '无效token',
-        data: {}
+        result: { ok: 0 },
+        data: []
       }
     }
   }

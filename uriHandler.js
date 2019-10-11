@@ -23,6 +23,7 @@ async function getHandle(ctx, next, collection, query, body) {
   ctx.body = {
     code: 200,
     msg: '查询成功',
+    method:'GET',
     result: { ok: 1, n: result.length },
     data: result
   }
@@ -30,12 +31,12 @@ async function getHandle(ctx, next, collection, query, body) {
 //POST
 async function postHandle(ctx, next, collection, query, body) {
   const result = await collection.insertMany(...body).catch((error) => { console.log(error) })
-  ctx.body = (result ? { code: 200, msg: 'success', result: result.result, data: [] } : { code: 400, msg: '语法错误', result: { ok: 0 }, data: [] })
+  ctx.body = (result ? { code: 200, msg: 'success',method:'POST', result: result.result, data: [] } : { code: 400, msg: '语法错误',method:'POST', result: { ok: 0 }, data: [] })
 }
 //DELETE
 async function deleteHandle(ctx, next, collection, query, body) {
   const result = await collection.deleteMany(...JSON.parse(query.d || '[{"":""}]'))
-  ctx.body = (result.result.n >= 1 ? { code: 200, msg: '删除成功', result: result.result, data: [] } : { code: 200, msg: '删除失败', result: result.result, data: [] })
+  ctx.body = (result.result.n >= 1 ? { code: 200, msg: '删除成功',method:'DELETE', result: result.result, data: [] } : { code: 200, msg: '删除失败',method:'DELETE' ,result: result.result, data: [] })
 }
 
 //PUT 
@@ -52,7 +53,7 @@ async function putHandle(ctx, next, collection, query, body) {
   const results = await Promise.all(promises)
 
   if (results.some((v, i, a) => typeof v === 'undefined')) {
-    ctx.body = { code: 400, msg: '语法错误', result: {ok:0},data:[] }
+    ctx.body = { code: 400, msg: '语法错误', method:'PUT', result: {ok:0},data:[] }
     return
   }
   //累加返回结果值
@@ -64,13 +65,13 @@ async function putHandle(ctx, next, collection, query, body) {
     value.ok *= v.result.ok
   })
   //返回结果给客户端
-  ctx.body = { code: 200, msg: '替换完成', result: value ,data:[]}
+  ctx.body = { code: 200, msg: '替换完成',method:'PUT', result: value ,data:[]}
 }
 
 //PATCH
 async function patchHandle(ctx, next, collection, query, body) {
   const result = await collection.updateMany(...body)
-  ctx.body = (result.result.n >= 1 ? { code: 200, msg: '更新成功', result: result.result,data:[] } : { code: 200, msg: '更新失败', result: result.result,data:[] })
+  ctx.body = (result.result.n >= 1 ? { code: 200, msg: '更新成功', method:'PATCH', result: result.result,data:[] } : { code: 200, msg: '更新失败',method:'PATCH', result: result.result,data:[] })
 }
 
 //处理跨域

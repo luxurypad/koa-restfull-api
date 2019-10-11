@@ -10,15 +10,14 @@
 
 <body>
   <script>
-    let n=100
-  function f(){
-   setTimeout(() => {
-    console.log(n) 
-   }, 3000); 
-  } 
-  n=n+1000
+    let a=100
+    let o={
+      a:1,
+      b:a+1
+    }
 
-  f()
+    console.log(o.a)
+    console.log(o.b)
   </script>
 
 </body>
