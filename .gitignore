@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 #自定义
-dbConfig.json
+dbConfig.js
+/public

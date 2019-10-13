@@ -1,11 +1,11 @@
 const uriHandler = require('./uriHandler')
+const fs = require('fs')
 
 //建立url和uri对应表
 const matchList = [
-  { pathRegExp: /^\/users$/, uri: 'users' },
-  { pathRegExp: /^\/news$/, uri: 'news' },
-  { pathRegExp: /^\/ssq$/, uri: 'ssq' },
-  { pathRegExp: /^\/nav-tree$/, uri: 'navTree' },
+  { pathRegExp: /^\/api\/users$/, uri: 'users' },
+  { pathRegExp: /^\/api\/news$/, uri: 'news' },
+  { pathRegExp: /^\/api\/trees$/, uri: 'trees' },
   { pathRegExp: /.*/, uri: '' },
 ]
 
@@ -15,11 +15,9 @@ async function router(ctx, next) {
   if (uri) {
     await uriHandler(ctx, next, uri)
   } else {
-    ctx.body = {
-      code: 404,
-      msg: '无法找到相应资源',
-      result: null
-    }
+    //匹配不到则返回index.html
+    ctx.set('Content-Type', 'text/html;charset=utf-8')
+    ctx.body = fs.readFileSync('public/index.html', 'utf-8')
   }
 }
 module.exports = router

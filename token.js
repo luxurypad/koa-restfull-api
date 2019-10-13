@@ -32,7 +32,7 @@ async function useToken(ctx, next) {   //定义中间件方法
     await next() //如果是白名单请求，直接通过
 
     //洋葱模型 返回时,判断登陆请求
-    if (ctx.path === '/users' && ctx.method === 'GET') {
+    if (ctx.path === '/api/users' && ctx.method === 'GET') {
       //判断是否登陆请求
       const { username, password } = JSON.parse(ctx.query.g)[0]
       if (!!username && !!password && ctx.body.result.n === 1) {
