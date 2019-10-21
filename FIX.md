@@ -42,3 +42,10 @@ const options={
 http.createServer(app.callback()).listen(6700)
 https.createServer(options,app.callback()).listen(6701)
 ```
+## 5.将mongodb数据库的ObjectId插入时指定为字符串类型
+```javascript
+if (ctx.method === 'POST') {
+  params=[...ctx.request.body]
+  params[0]=params[0].map((v,i,array)=>({_id:new mongodb.ObjectId().toHexString(),...v}))
+}
+```

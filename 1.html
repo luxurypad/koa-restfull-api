@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function f(name,age){
+      this.name=name
+      this.age=age
+      function say(){
+        console.log(this.name,this.age)
+      }
+    }
+    f.prototype.say=()=>{
+      console.log(this.name,this.age)
+      console.log('1212')
+    }
+
+    let a=new f('鲁旭',22)
+    console.log(a.name)
+    console.log(a.age)
+   a.say()
+
+  </script>
+</body>
+
+</html>
